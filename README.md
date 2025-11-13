@@ -50,8 +50,7 @@ SnakeGame.exe
 •	Two-player mode
 •	Configurable speed and board size
 •	Database-based leaderboard
-🧠 Viva Explanation
-•	Through Explanation
+
 i. Approach Taken - Modular, object-oriented design for efficiency and maintainability.
 ii. Data Structures Used - struct Point, static arrays or vectors for body parts.
 iii. Tradeoffs Made - Console rendering for simplicity, minimal dependencies.
