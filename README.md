@@ -233,3 +233,36 @@ Developed using **C++ | Windows Console**
 Feel free to fork the repository, experiment with the code, suggest improvements, or add new features.
 
 If you enjoyed the project, consider giving it a ⭐ on GitHub!
+
+## Multiplayer Mode
+
+The game now supports two players on the same board.
+
+### Player 1 Controls
+
+- Arrow Up - Move Up
+- Arrow Down - Move Down
+- Arrow Left - Move Left
+- Arrow Right - Move Right
+
+### Player 2 Controls
+
+- W - Move Up
+- S - Move Down
+- A - Move Left
+- D - Move Right
+
+### Multiplayer Features
+
+- Two snakes on the same board
+- Independent movement
+- Individual scores
+- Shared food
+- Snake growth
+- Wall collision detection
+- Self-collision detection
+- Snake-to-snake collision detection
+- Game-over detection
+- Winner/loser indication
+- Persistent high score
+- Replay option
