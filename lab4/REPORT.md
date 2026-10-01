@@ -4,7 +4,7 @@
 |---|---|
 | Repository | aayushi2212/ITP_project (your own snake game) |
 | Base tag | `lab4-base` at commit 9f3e214a0aff948736e64264901f830d3efaf06f |
-| Pull request | #1 |
+| Pull request | lab4 -> main |
 
 ---
 
@@ -61,8 +61,8 @@ No source changes in this part. Every `file:line` below is a line in `lab4-base`
 | | |
 |---|---|
 | Rule made testable | Keyboard inputs ('w', 'a', 's', 'd') update the snake's movement direction during the game loop (Rule 5) |
-| Commit 1 (seam) | 1639d6e |
-| Commit 2 (test) | 49ae13b |
+| Commit 1 (seam) | afba211 |
+| Commit 2 (test) | ea85cbe |
 | Seam kind | object |
 | Enabling point | `Board::Board(InputSource *input, bool headless)` constructor parameter and `Board::getInput()` where `inputSource` is injected and dispatched polymorphically |
 | What production code gave up | Direct binding to `<conio.h>` global console polling (`kbhit()` / `getch()`). In exchange for testability, production code introduced dynamic polymorphism (an abstract base class `InputSource`, virtual function calls with vtable lookup, and ownership management for the input strategy). |
