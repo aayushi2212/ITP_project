@@ -86,6 +86,24 @@ int getchWrapper() {
 }
 #endif
 
+// --- Input Seam Interface ---
+class InputSource {
+public:
+    virtual ~InputSource() {}
+    virtual bool hasKey() = 0;
+    virtual int getKey() = 0;
+};
+
+class KeyboardInput : public InputSource {
+public:
+    bool hasKey() override {
+        return kbhitWrapper();
+    }
+    int getKey() override {
+        return getchWrapper();
+    }
+};
+
 class Snake {
     int length;
     char direction;
@@ -99,6 +117,7 @@ public:
     }
 
     int getLength() { return length; }
+    char getDirection() { return direction; }
 
     void changeDirection(char newDirection) {
         if (newDirection == DIR_UP && direction != DIR_DOWN)
@@ -139,6 +158,8 @@ public:
 
 class Board {
     Snake *snake;
+    InputSource *inputSource;
+    bool ownsInputSource;
     const char SNAKE_BODY = 'O';
     Point food;
     int score;
@@ -147,16 +168,35 @@ class Board {
     vector<char> fruits = {'@', '*', '$', '&', '%', '+'};
 
 public:
-    Board() {
+    Board(InputSource *input = nullptr, bool headless = false) {
+        if (input != nullptr) {
+            inputSource = input;
+            ownsInputSource = false;
+        } else {
+            inputSource = new KeyboardInput();
+            ownsInputSource = true;
+        }
         snake = new Snake(GAME_LEFT + GAME_WIDTH / 2, GAME_TOP + GAME_HEIGHT / 2);
         score = 0;
-        loadHighScore();
-        hideCursor();
-        drawBorder();
-        spawnFood(); 
+        if (!headless) {
+            loadHighScore();
+            hideCursor();
+            drawBorder();
+            spawnFood();
+        }
     }
 
-    ~Board() { delete snake; }
+    ~Board() {
+        delete snake;
+        if (ownsInputSource) {
+            delete inputSource;
+        }
+    }
+
+    Snake* getSnake() { return snake; }
+    int getScore() { return score; }
+    Point getFood() { return food; }
+    void setFood(Point p) { food = p; }
 
     void loadHighScore() {
         ifstream file("highscore.txt");
@@ -258,8 +298,8 @@ public:
     }
 
     void getInput() {
-        if (kbhitWrapper()) {
-            int key = getchWrapper();
+        if (inputSource && inputSource->hasKey()) {
+            int key = inputSource->getKey();
             if (key == 'w' || key == 'W')
                 snake->changeDirection(DIR_UP);
             else if (key == 'a' || key == 'A')
@@ -284,6 +324,7 @@ public:
         cout << "\nEnter choice: ";
     }
 };
+
 int main() {
     srand(time(0));
     const int UPDATE_INTERVAL = 200;
